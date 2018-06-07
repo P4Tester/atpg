@@ -364,6 +364,9 @@ def main():
     for tf in ntf_global.tf_list:
         rule_count += len(tf.rules)
         for rule in tf.rules:
+            # print '-------------'
+            # print tf.rules[4]
+            # exit(1) 
             query = "INSERT INTO %s VALUES (?, ?, ?, ?, ?, ?)" % TABLE_NETWORK_RULES
             conn.execute(query, (rule['id'],' '.join(map(str, rule['in_ports'])), ' '.join(map(str, rule['out_ports'])), rule['action'], rule["file"], ' '.join(map(str, rule["line"]))))
     print "Total Rules: %d" % rule_count
@@ -371,6 +374,7 @@ def main():
     
     rule_count = len(ttf_global.rules) 
     for rule in ttf_global.rules:
+
         query = "INSERT INTO %s VALUES (?, ?, ?)" % TABLE_TOPOLOGY_RULES 
         conn.execute(query, (rule['id'],' '.join(map(str, rule['in_ports'])), ' '.join(map(str, rule['out_ports']))))  
     print "Total Links: %d" % rule_count
@@ -379,6 +383,9 @@ def main():
     for rtr in port_map_global.keys():
         src_port_ids_global |= set(port_map_global[rtr].values())
     
+    print '-------------'
+    print port_map_global
+    exit(1)    
     
     total_length = len(src_port_ids_global)
     if args.e == True:
